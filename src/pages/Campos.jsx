@@ -1,20 +1,45 @@
-import react from 'react';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
+import FormControl from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
+import InputLabel from '@mui/material/InputLabel';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import './login-style.css';
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
 const Campos = () => {
 
-	
+	const [values, setValues] = useState({
+    amount: '',
+    password: '',
+    weight: '',
+    weightRange: '',
+    showPassword: false,
+  });
+
+  const handleChange =
+    (prop) => (event) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
 	const BootstrapButton = styled(Button)({
 		boxShadow: 'none',
@@ -53,31 +78,15 @@ const Campos = () => {
 		},
 	});
 
-	const CssTextField = styled(TextField)({
-		'& label.Mui-focused': {
-			color: 'purple',
-		},
-		'& .MuiInput-underline:after': {
-			borderBottomColor: 'purple',
-		},
-		'& .MuiOutlinedInput-root': {
-			'&:hover fieldset': {
-				borderColor: 'purple',
-			},
-			'&.Mui-focused fieldset': {
-				borderColor: 'purple',
-			},
-		},
-	});
-
 	return (
 		<div className="container-campos">
 			<form action="">
 				<Stack spacing={2}>
-					<h2 htmlFor="custom-css-outlined-input">Sign In</h2>
-					<CssTextField
+					<h2 htmlFor="email">Sign In</h2>
+					<TextField
 						label="Email"
-						id="custom-css-outlined-input"
+						id="email"
+						color="secondary"
 						InputProps={{
 							startAdornment: (
 								<InputAdornment position="start">
@@ -85,26 +94,36 @@ const Campos = () => {
 								</InputAdornment>
 							),
 						}} />
-						<CssTextField
-							id="input-with-icon-textfield"
-							label="Senha"
-							//type="password"
-							InputProps={{
-								startAdornment: (
+						<FormControl sx={{ m: 1, width: 'auto' }} variant="outlined">
+							<InputLabel color="secondary" htmlFor="senha">Password</InputLabel>
+							<OutlinedInput
+								id="senha"
+								type={values.showPassword ? 'text' : 'password'}
+								value={values.password}
+								color="secondary"
+								onChange={handleChange('password')}
+								startAdornment={
 									<InputAdornment position="start">
-										<VisibilityIcon />
+										<IconButton
+											aria-label="toggle password visibility"
+											onClick={handleClickShowPassword}
+											onMouseDown={handleMouseDownPassword}
+											edge="start"
+										>
+											{values.showPassword ? <VisibilityOff /> : <Visibility />}
+										</IconButton>
 									</InputAdornment>
-								),
-							}}
-							variant="outlined"
-						/>
+								}
+								label="Password"
+							/>
+						</FormControl>
 					<FormControlLabel
 						value="end"
 						control={<Checkbox color="default" />}
 						label="Lembrar senha?"
-						labelPlacement="end"
-					/>
+						labelPlacement="end" />
 					<BootstrapButton variant="contained" disableRipple>Login</BootstrapButton>
+					<a href="/"><h5 style={{ textAlign: 'center' }}>Novo aqui? Criar uma conta</h5></a>
 				</Stack>
 			</form>
 		</div>
