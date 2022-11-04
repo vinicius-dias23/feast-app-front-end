@@ -6,7 +6,7 @@ import './login-style.css'
 const Rodape = () =>  (
 	<footer className="rodape">
 		<Stack direction="row" spacing={2}>
-			<p>Desenvolvido por Vinícius Dias e Matheus Hoske - Todos os direitos Reservados</p>
+			<p>© 2022 Feast App - Todos os direitos Reservados</p>
 			<img src={logo} alt="logo" className="logo" />
 		</Stack>
 	</footer>

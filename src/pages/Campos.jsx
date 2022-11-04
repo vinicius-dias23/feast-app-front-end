@@ -23,14 +23,13 @@ const Campos = () => {
     weight: '',
     weightRange: '',
     showPassword: false,
-  });
+	});
 
-  const handleChange =
-    (prop) => (event) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+	const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+};
 
-  const handleClickShowPassword = () => {
+	const handleClickShowPassword = () => {
     setValues({
       ...values,
       showPassword: !values.showPassword,
