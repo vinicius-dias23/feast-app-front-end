@@ -1,0 +1,12 @@
+.box-not-found {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	background-image: linear-gradient(to bottom right, rgb(86, 0, 123), rgb(133, 48, 198));
+	padding: 20px;
+	width: 100%;
+	border-radius: 3%;
+	font-size: large;
+	color: #FFF;
+}

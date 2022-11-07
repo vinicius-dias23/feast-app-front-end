@@ -13,6 +13,10 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Link } from 'react-router-dom';
 import './login-style.css';
 
 const BoxLogin = ({ formCadastroAberto, setFormCadastroAberto }) => {
@@ -78,53 +82,59 @@ const BoxLogin = ({ formCadastroAberto, setFormCadastroAberto }) => {
 	});
 
 	return (
-		<div className="container-campos">
-			<form action="">
-				<Stack spacing={2}>
-					<h2 htmlFor="email">Sign In</h2>
-					<TextField
-						label="Email"
-						id="email"
-						color="secondary"
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<AccountCircle />
-								</InputAdornment>
-							),
-						}} />
-						<FormControl sx={{ m: 1, width: 'auto' }} variant="outlined">
-							<InputLabel color="secondary" htmlFor="senha">Senha</InputLabel>
-							<OutlinedInput
-								id="senha"
-								type={values.showPassword ? 'text' : 'password'}
-								value={values.password}
-								color="secondary"
-								onChange={handleChange('password')}
-								startAdornment={
-									<InputAdornment position="start">
-										<IconButton
-											aria-label="toggle password visibility"
-											onClick={handleClickShowPassword}
-											onMouseDown={handleMouseDownPassword}
-											edge="start"
-										>
-											{values.showPassword ? <VisibilityOff /> : <Visibility />}
-										</IconButton>
-									</InputAdornment>
-								}
-								label="Senha"
-							/>
-						</FormControl>
-					<FormControlLabel
-						value="end"
-						control={<Checkbox color="default" />}
-						label="Lembrar senha?"
-						labelPlacement="end" />
-					<BootstrapButton variant="contained" disableRipple>Login</BootstrapButton>
-					<a onClick={() => setFormCadastroAberto(true)} style={{ textDecoration: 'underline', cursor: 'pointer' }}><h5 style={{ textAlign: 'center' }}>Novo aqui? Criar uma conta</h5></a>
+		<div className="container-campos-login">
+			<Stack spacing={2}>
+				<h2 htmlFor="email">Login</h2>
+				<Stack style={{ justifyContent: 'center' }} direction="row" spacing={4}>
+					<FacebookIcon />
+					<GoogleIcon />
+					<LinkedInIcon />
 				</Stack>
-			</form>
+				<TextField
+					label="Email"
+					id="email"
+					color="secondary"
+					fullWidth
+					InputProps={{
+						startAdornment: (
+							<InputAdornment position="start">
+								<AccountCircle />
+							</InputAdornment>
+						),
+					}} />
+					<FormControl sx={{ m: 1, width: 'auto' }} variant="outlined">
+						<InputLabel color="secondary" htmlFor="senha">Senha</InputLabel>
+						<OutlinedInput
+							id="senha"
+							type={values.showPassword ? 'text' : 'password'}
+							value={values.password}
+							color="secondary"
+							onChange={handleChange('password')}
+							startAdornment={
+								<InputAdornment position="start">
+									<IconButton
+										aria-label="toggle password visibility"
+										onClick={handleClickShowPassword}
+										onMouseDown={handleMouseDownPassword}
+										edge="start"
+									>
+										{values.showPassword ? <VisibilityOff /> : <Visibility />}
+									</IconButton>
+								</InputAdornment>
+							}
+							label="Senha"
+						/>
+					</FormControl>
+				<FormControlLabel
+					value="end"
+					control={<Checkbox color="default" />}
+					label="Lembrar senha?"
+					labelPlacement="end" />
+				<BootstrapButton variant="contained" disableRipple>Login</BootstrapButton>
+				<Link to='/cadastro'>
+					Novo aqui? Criar uma conta
+				</Link>
+			</Stack>
 		</div>
 	);
 };

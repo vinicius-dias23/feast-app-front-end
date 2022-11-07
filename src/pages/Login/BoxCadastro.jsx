@@ -13,6 +13,10 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GoogleIcon from '@mui/icons-material/Google';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Link } from 'react-router-dom';
 import './login-style.css';
 
 const BoxCadastro = ({ formCadastroAberto, setFormCadastroAberto }) => {
@@ -96,9 +100,14 @@ const BoxCadastro = ({ formCadastroAberto, setFormCadastroAberto }) => {
 	});
 
 	return (
-		<div className="container-campos">
+		<div className="container-campos-cadastros">
 			<Stack spacing={2}>
-				<h2 htmlFor="email">Sign Up</h2>
+				<h2 htmlFor="email">Cadastro</h2>
+				<Stack style={{ justifyContent: 'center' }} direction="row" spacing={4}>
+					<FacebookIcon />
+					<GoogleIcon />
+					<LinkedInIcon />
+				</Stack>
 				<Stack direction="row" spacing={1}>
 					<TextField
 						label="Email"
@@ -183,7 +192,9 @@ const BoxCadastro = ({ formCadastroAberto, setFormCadastroAberto }) => {
 							),
 						}} />
 					<BootstrapButton variant="contained" disableRipple>Cadastrar</BootstrapButton>
-					<a onClick={() => setFormCadastroAberto(false)} style={{ textDecoration: 'underline', cursor: 'pointer' }}><h5 style={{ textAlign: 'center' }}>Novo aqui? Criar uma conta</h5></a>
+					<Link to='/'>
+						Voltar para o Login
+					</Link>
 			</Stack>
 		</div>
 	);
