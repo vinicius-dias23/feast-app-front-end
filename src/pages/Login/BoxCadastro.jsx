@@ -15,11 +15,14 @@ import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './login-style.css';
 
-const BoxCadastro = ({ formCadastroAberto, setFormCadastroAberto }) => {
+const BoxCadastro = ({ setPainelDireitaAtivo }) => {
+	const navigate = useNavigate();
+
 	const [valorSenha, setValorSenha] = useState({
     amount: '',
     password: '',
@@ -106,7 +109,7 @@ const BoxCadastro = ({ formCadastroAberto, setFormCadastroAberto }) => {
 				<Stack style={{ justifyContent: 'center' }} direction="row" spacing={4}>
 					<FacebookIcon />
 					<GoogleIcon />
-					<LinkedInIcon />
+					<TwitterIcon />
 				</Stack>
 				<Stack direction="row" spacing={1}>
 					<TextField
@@ -191,8 +194,8 @@ const BoxCadastro = ({ formCadastroAberto, setFormCadastroAberto }) => {
 								</InputAdornment>
 							),
 						}} />
-					<BootstrapButton variant="contained" disableRipple>Cadastrar</BootstrapButton>
-					<Link to='/'>
+					<BootstrapButton onClick={() => { setTimeout(() => { navigate('/'); setPainelDireitaAtivo(false); }, 1000); }} variant="contained" disableRipple>Cadastrar</BootstrapButton>
+					<Link to='/' onClick={() => { setPainelDireitaAtivo(false); }}>
 						Voltar para o Login
 					</Link>
 			</Stack>

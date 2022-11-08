@@ -15,11 +15,13 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './login-style.css';
 
-const BoxLogin = ({ formCadastroAberto, setFormCadastroAberto }) => {
+const BoxLogin = ({ setPainelDireitaAtivo }) => {
+	const navigate = useNavigate();
 
 	const [values, setValues] = useState({
     amount: '',
@@ -88,7 +90,7 @@ const BoxLogin = ({ formCadastroAberto, setFormCadastroAberto }) => {
 				<Stack style={{ justifyContent: 'center' }} direction="row" spacing={4}>
 					<FacebookIcon />
 					<GoogleIcon />
-					<LinkedInIcon />
+					<TwitterIcon />
 				</Stack>
 				<TextField
 					label="Email"
@@ -130,8 +132,8 @@ const BoxLogin = ({ formCadastroAberto, setFormCadastroAberto }) => {
 					control={<Checkbox color="default" />}
 					label="Lembrar senha?"
 					labelPlacement="end" />
-				<BootstrapButton variant="contained" disableRipple>Login</BootstrapButton>
-				<Link to='/cadastro'>
+				<BootstrapButton onClick={() => { setTimeout(() => { navigate('/cadastro'); setPainelDireitaAtivo(true); }, 500); }} variant="contained" disableRipple>Login</BootstrapButton>
+				<Link to='/cadastro' onClick={() => { setPainelDireitaAtivo(true); }}>
 					Novo aqui? Criar uma conta
 				</Link>
 			</Stack>
