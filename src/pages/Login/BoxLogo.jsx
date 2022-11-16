@@ -1,14 +1,12 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
-import Titulo from './Titulo';
+import Logo from '../../components/Logo';
 
 const BoxLogo = () => (
-	<>
-		<Stack style={{ alignItems: 'center', marginRight: '25px' }} spacing={2}>
-			<Titulo />
-			<p style={{ marginLeft: '25px' }}>Conheça a nova maneira de organizar a sua festa</p>
-		</Stack>
-	</>
+	<Stack style={{ alignItems: 'center', marginRight: '25px' }} spacing={2}>
+		<Logo />
+		<p style={{ marginLeft: '25px' }}>Conheça a nova maneira de organizar a sua festa</p>
+	</Stack>
 )
 
 export default BoxLogo;

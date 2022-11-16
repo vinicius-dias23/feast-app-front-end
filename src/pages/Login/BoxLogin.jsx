@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -16,14 +16,35 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import './login-style.css';
+import { auth, AuthGoogleContext } from '../../contexts/authGoogle';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import './login.css';
 
 const BoxLogin = ({ setPainelDireitaAtivo }) => {
+	const { signInGoogle, signed } = useContext(AuthGoogleContext);
+	const [email, setEmail] = useState('');
+
+	const [
+		signInWithEmailAndPassword,
+		user,
+		loading,
+		error,
+	] = useSignInWithEmailAndPassword(auth);
+
+	function handleSignIn(e) {
+		e.preventDefault();
+		signInWithEmailAndPassword(email, valorSenha.password);
+	}
+
+	async function loginGoogle() {
+		await signInGoogle();
+	}
+
 	const navigate = useNavigate();
 
-	const [values, setValues] = useState({
+	const [valorSenha, setValorSenha] = useState({
     amount: '',
     password: '',
     weight: '',
@@ -32,19 +53,19 @@ const BoxLogin = ({ setPainelDireitaAtivo }) => {
 	});
 
 	const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+    setValorSenha({ ...valorSenha, [prop]: event.target.value });
 };
 
 	const handleClickShowPassword = () => {
-    setValues({
-			...values,
-			showPassword: !values.showPassword,
+    setValorSenha({
+			...valorSenha,
+			showPassword: !valorSenha.showPassword,
     });
 	};
 
-  const handleMouseDownPassword = (event) => {
+	const handleMouseDownPassword = (event) => {
     event.preventDefault();
-  };
+	};
 
 	const BootstrapButton = styled(Button)({
 		boxShadow: 'none',
@@ -83,62 +104,75 @@ const BoxLogin = ({ setPainelDireitaAtivo }) => {
 		},
 	});
 
-	return (
-		<div className="container-campos-login">
-			<Stack spacing={2}>
-				<h2 htmlFor="email">Login</h2>
-				<Stack style={{ justifyContent: 'center' }} direction="row" spacing={4}>
-					<FacebookIcon />
-					<GoogleIcon />
-					<TwitterIcon />
-				</Stack>
-				<TextField
-					label="Email"
-					id="email"
-					color="secondary"
-					fullWidth
-					InputProps={{
-						startAdornment: (
-							<InputAdornment position="start">
-								<AccountCircle />
-							</InputAdornment>
-						),
-					}} />
-					<FormControl sx={{ m: 1, width: 'auto' }} variant="outlined">
-						<InputLabel color="secondary" htmlFor="senha">Senha</InputLabel>
-						<OutlinedInput
-							id="senha"
-							type={values.showPassword ? 'text' : 'password'}
-							value={values.password}
-							color="secondary"
-							onChange={handleChange('password')}
-							startAdornment={
+	if (loading) {
+		return <p>carregando...</p>
+	}
+
+	if (user) {
+		return console.log(user)
+	}
+
+	if (!signed) {
+		return (
+			<div className="container-campos-login">
+				<Stack spacing={2}>
+					<h2 htmlFor="email">Login</h2>
+					<Stack style={{ justifyContent: 'center' }} direction="row" spacing={4}>
+						<IconButton color='inherit'><FacebookIcon /></IconButton>
+						<IconButton onClick={loginGoogle} color='inherit'><GoogleIcon /></IconButton>
+						<IconButton color='inherit'><TwitterIcon /></IconButton>
+					</Stack>
+					<TextField
+						label="Email"
+						id="email"
+						color="secondary"
+						fullWidth
+						onChange={e => setEmail(e.target.value)}
+						InputProps={{
+							startAdornment: (
 								<InputAdornment position="start">
-									<IconButton
-										aria-label="toggle password visibility"
-										onClick={handleClickShowPassword}
-										onMouseDown={handleMouseDownPassword}
-										edge="start"
-									>
-										{values.showPassword ? <VisibilityOff /> : <Visibility />}
-									</IconButton>
+									<AccountCircle />
 								</InputAdornment>
-							}
-							label="Senha"
-						/>
-					</FormControl>
-				<FormControlLabel
-					value="end"
-					control={<Checkbox color="default" />}
-					label="Lembrar senha?"
-					labelPlacement="end" />
-				<BootstrapButton onClick={() => { setTimeout(() => { navigate('/cadastro'); setPainelDireitaAtivo(true); }, 500); }} variant="contained" disableRipple>Login</BootstrapButton>
-				<Link to='/cadastro' onClick={() => { setPainelDireitaAtivo(true); }}>
-					Novo aqui? Criar uma conta
-				</Link>
-			</Stack>
-		</div>
-	);
+							),
+						}} />
+						<FormControl sx={{ m: 1, width: 'auto' }} variant="outlined">
+							<InputLabel color="secondary" htmlFor="senha">Senha</InputLabel>
+							<OutlinedInput
+								id="senha"
+								type={valorSenha.showPassword ? 'text' : 'password'}
+								value={valorSenha.password}
+								color="secondary"
+								onChange={handleChange('password')}
+								startAdornment={
+									<InputAdornment position="start">
+										<IconButton
+											aria-label="toggle password visibility"
+											onClick={handleClickShowPassword}
+											onMouseDown={handleMouseDownPassword}
+											edge="start"
+										>
+											{valorSenha.showPassword ? <VisibilityOff /> : <Visibility />}
+										</IconButton>
+									</InputAdornment>
+								}
+								label="Senha"
+							/>
+						</FormControl>
+					<FormControlLabel
+						value="end"
+						control={<Checkbox color="default" />}
+						label="Lembrar senha?"
+						labelPlacement="end" />
+					<BootstrapButton onClick={handleSignIn} variant="contained" disableRipple>Login</BootstrapButton>
+					<Link onClick={() => { setPainelDireitaAtivo(true); setTimeout(() => { navigate('/cadastro'); }, 300); }}>
+						Novo aqui? Criar uma conta
+					</Link>
+				</Stack>
+			</div>
+		);
+	} else {
+		return <Navigate to='/home' />
+	}
 };
 
 export default BoxLogin;
